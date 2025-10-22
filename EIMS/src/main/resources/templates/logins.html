@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン画面</title>
+</head>
+<body style="text-align: center; margin: 20% auto;">
+
+    <!-- Spring Securityが /login?error を返したときにアラート表示 -->
+    <div th:if="${param.error}">
+        <script>
+            alert("社員番号またはパスワードが間違っています。");  
+        </script>
+    </div>
+
+    <h2>社員情報管理システム</h2>
+
+    <form th:action="@{/logins}" method="post">
+        <table style="margin: auto; text-align: center;">
+            <tr>
+                <th>社員番号:</th>
+                <td><input type="text" name="staffcode" required /></td>
+            </tr>
+            <tr>
+                <th>名前:</th>
+                <td><input type="text" name="ename" required /></td>
+            </tr>
+            <tr>
+                <th>パスワード:</th>
+                <td><input type="password" name="password" maxlength="25" required /></td>
+            </tr>
+        </table>
+        <p><button type="submit">ログイン</button></p>
+    </form>
+
+    <p>
+        アカウントを持っていない場合：<a th:href="@{/register}">登録する</a>
+    </p>
+</body>
+</html>

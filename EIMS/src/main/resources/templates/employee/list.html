@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>社員一覧</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: auto;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid #aaa;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 60px;
+        }
+
+        /* 操作列の枠線なし */
+        .no-border {
+            border: none !important;
+        }
+
+        /* ボタンを横並び */
+        .button-box {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .button-box form {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="text-align:center;">社員一覧</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>社員番号</th>
+                <th>名前</th>
+                <th>役職</th>
+                <!-- 操作列見出し削除 -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="employee : ${employees}">
+                <form th:action="@{/employee/update}" method="post">
+                    <input type="hidden" name="id" th:value="${employee.id}" />
+                    <td>
+                        <!-- ゼロ埋め3桁で表示 -->
+						<input type="text" name="staffcode" th:value="${employee.formattedStaffCode}" readonly/>
+
+                    </td>
+                    <td>
+                        <input type="text" name="ename" th:value="${employee.ename}" required />
+                    </td>
+                    <td>
+                        <input type="text" name="position" th:value="${employee.position}" required />
+                    </td>
+                    <td class="no-border" colspan="3">
+                        <div class="button-box">
+                            <button type="submit">更新</button>
+                </form>
+                            <form th:action="@{/employee/delete}" method="post">
+                                <input type="hidden" name="id" th:value="${employee.id}" />
+                                <button type="submit">削除</button>
+                            </form>
+                        </div>
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
